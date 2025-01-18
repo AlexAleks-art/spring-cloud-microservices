@@ -6,6 +6,9 @@ import com.domasalex.spring.cloud.billservice.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 public class BillController {
 
@@ -34,5 +37,13 @@ public class BillController {
     @DeleteMapping("/{billId}")
     public BillResponseDto deleteBill(@PathVariable Long billId) {
         return new BillResponseDto(billService.deleteBill(billId));
+    }
+
+    @GetMapping("/account/{accountId}")
+    public List<BillResponseDto> getBillsByAccountId(@PathVariable Long accountId) {
+        return billService.getBillsByAccountId(accountId)
+                .stream()
+                .map(BillResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

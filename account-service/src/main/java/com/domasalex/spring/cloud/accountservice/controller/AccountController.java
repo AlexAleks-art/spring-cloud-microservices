@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/accounts")
 public class AccountController {
 
     private final AccountService accountService;
@@ -16,7 +17,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping("{accountId}")
+    @GetMapping("/{accountId}")
     public AccountResponseDTO getAccount(@PathVariable Long accountId) {
         return new AccountResponseDTO(accountService.getAccountById(accountId));
     }
